@@ -78,7 +78,75 @@
 //
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const tasks = [];
+
+function addTask(callback) {
+    rl.question("Enter task: ", (task) => {
+        tasks.push(task);
+        console.log(`Task added: "${task}"`);
+        callback();
+    });
+}
+
+function viewTasks() {
+    if (tasks.length === 0) {
+        console.log("Your list is empty.");
+        return;
+    }
+    console.log("Your Tasks:");
+    tasks.forEach((t, i) => console.log(`${i + 1}. ${t}`));
+}
+
+function deleteTask(callback) {
+    if (tasks.length === 0) {
+        console.log("Your list is empty.");
+        callback();
+        return;
+    }
+    viewTasks();
+    rl.question("Enter task number to delete: ", (input) => {
+        const num = parseInt(input);
+        if (num < 1 || num > tasks.length) {
+            console.log("Invalid task number.");
+        } else {
+            const removed = tasks.splice(num - 1, 1)[0];
+            console.log(`Task "${removed}" has been removed.`);
+        }
+        callback();
+    });
+}
+
+function showMenu() {
+    console.log("\n====================");
+    console.log("   TO-DO LIST MENU");
+    console.log("====================");
+    console.log("1. Add task");
+    console.log("2. View tasks");
+    console.log("3. Delete task");
+    console.log("4. Quit");
+
+    rl.question("Enter your choice (1-4): ", (choice) => {
+        if (choice === "1") {
+            addTask(showMenu);
+        } else if (choice === "2") {
+            viewTasks();
+            showMenu();
+        } else if (choice === "3") {
+            deleteTask(showMenu);
+        } else if (choice === "4") {
+            console.log("Goodbye!");
+            rl.close();
+        } else {
+            console.log("Invalid choice, please try again.");
+            showMenu();
+        }
+    });
+}
+
+showMenu();
+
 // =============================================================================
 
 
