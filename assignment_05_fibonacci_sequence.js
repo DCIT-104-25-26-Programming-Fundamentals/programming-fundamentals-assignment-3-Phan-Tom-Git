@@ -51,7 +51,55 @@
 
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+function printFibonacci(n) {
+    let first = 0, second = 1;
+    let output = [];
+    for (let i = 0; i < n; i++) {
+        output.push(first);
+        const next = first + second;
+        first = second;
+        second = next;
+    }
+    console.log("Fibonacci sequence: " + output.join(" "));
+}
+
+function checkFibonacci(num) {
+    let first = 0, second = 1;
+    if (num === 0) return true;
+    while (first <= num) {
+        const next = first + second;
+        first = second;
+        second = next;
+        if (first === num) return true;
+    }
+    return false;
+}
+rl.question("How many terms? ", (input) => {
+    const n = parseInt(input);
+
+    if (n <= 0) {
+        console.log("Error: N must be a positive integer.");
+    } else {
+        printFibonacci(n);
+    }
+
+    rl.question("Enter a number to check: ", (numInput) => {
+        const num = parseInt(numInput);
+
+        if (num < 0) {
+            console.log("Error: number must be a positive integer.");
+        } else if (checkFibonacci(num)) {
+            console.log(num + " is a Fibonacci number.");
+        } else {
+            console.log(num + " is NOT a Fibonacci number.");
+        }
+
+        rl.close();
+    });
+});
 // =============================================================================
 
 
