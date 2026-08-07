@@ -71,7 +71,79 @@
 
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+function add(a, b) { return a + b; }
+function subtract(a, b) { return a - b; }
+function multiply(a, b) { return a * b; }
+function divide(a, b) { return a / b; }
+function remainder(a, b) { return a % b; }
+function power(a, b) { return Math.pow(a, b); }
+
+function showMenu() {
+    console.log("\n=============================");
+    console.log("       SIMPLE CALCULATOR");
+    console.log("=============================");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("5. Modulus");
+    console.log("6. Exponentiation");
+    console.log("7. Quit");
+
+    rl.question("Select an operation (1-7): ", (choiceInput) => {
+        const choice = parseInt(choiceInput);
+
+        if (choice === 7) {
+            console.log("Goodbye!");
+            rl.close();
+            return;
+        }
+
+        if (choice < 1 || choice > 7) {
+            console.log("Invalid choice, please try again.");
+            showMenu();
+            return;
+        }
+
+        rl.question("Enter first number : ", (aInput) => {
+            rl.question("Enter second number: ", (bInput) => {
+                const a = parseFloat(aInput);
+                const b = parseFloat(bInput);
+
+                if (choice === 1) {
+                    console.log(`Result: ${a} + ${b} = ${add(a, b).toFixed(2)}`);
+                } else if (choice === 2) {
+                    console.log(`Result: ${a} - ${b} = ${subtract(a, b).toFixed(2)}`);
+                } else if (choice === 3) {
+                    console.log(`Result: ${a} * ${b} = ${multiply(a, b).toFixed(2)}`);
+                } else if (choice === 4) {
+                    if (b === 0) {
+                        console.log("Error: Cannot divide by zero.");
+                    } else {
+                        console.log(`Result: ${a} / ${b} = ${divide(a, b).toFixed(2)}`);
+                    }
+                } else if (choice === 5) {
+                    if (b === 0) {
+                        console.log("Error: Cannot divide by zero.");
+                    } else {
+                        console.log(`Result: ${Math.trunc(a)} % ${Math.trunc(b)} = ${remainder(Math.trunc(a), Math.trunc(b))}`);
+                    }
+                } else if (choice === 6) {
+                    console.log(`Result: ${a} ^ ${b} = ${power(a, b).toFixed(2)}`);
+                }
+
+                showMenu();
+            });
+        });
+    });
+}
+
+showMenu();
+
+
 // =============================================================================
 
 
