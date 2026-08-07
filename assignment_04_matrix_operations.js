@@ -65,8 +65,56 @@
 //
 
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+function transpose(matrix, rows, cols) {
+    const result = [];
+    for (let j = 0; j < cols; j++) {
+        result.push([]);
+        for (let i = 0; i < rows; i++) {
+            result[j].push(matrix[i][j]);
+        }
+    }
+    return result;
+}
+
+function printMatrix(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        console.log(matrix[i].map(n => String(n).padStart(5)).join(''));
+    }
+}
+
+rl.question("Enter number of rows: ", (rowsInput) => {
+    const rows = parseInt(rowsInput);
+    rl.question("Enter number of columns: ", (colsInput) => {
+        const cols = parseInt(colsInput);
+        const matrix = [];
+        let i = 0, j = 0;
+  function askElement() {
+            rl.question(`Enter element [${i}][${j}]: `, (val) => {
+                if (!matrix[i]) matrix[i] = [];
+                matrix[i][j] = parseInt(val);
+                j++;
+                if (j === cols) { j = 0; i++; }
+
+                if (i === rows) {
+                    console.log("Original Matrix:");
+                    printMatrix(matrix);
+                    console.log("Transposed Matrix:");
+                    printMatrix(transpose(matrix, rows, cols));
+                    rl.close();
+                } else {
+                    askElement();
+                }
+            });
+        }
+
+        askElement();
+    });
+});
+
 // =============================================================================
 
-const readlineSync = require('readline-sync');
+
 
