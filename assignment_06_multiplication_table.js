@@ -56,7 +56,36 @@
 
 //
 // =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+function printTable(num) {
+    console.log(`Multiplication Table for ${num}:`);
+    for (let i = 1; i <= 12; i++) {
+        console.log(`${num} x ${i} = ${num * i}`);
+    }
+}
+
+rl.question("Enter a number: ", (numInput) => {
+    printTable(parseInt(numInput));
+
+    rl.question("Enter a number N: ", (nInput) => {
+        const n = parseInt(nInput);
+
+        if (n <= 0) {
+            console.log("Error: N must be a positive integer.");
+            rl.close();
+            return;
+        }
+
+        for (let num = 1; num <= n; num++) {
+            printTable(num);
+            if (num !== n) console.log("---");
+        }
+
+        rl.close();
+    });
+});
 // =============================================================================
 
 
